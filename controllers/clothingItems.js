@@ -4,7 +4,7 @@ const { BAD_REQUEST, NOT_FOUND, SERVER_ERROR } = require("../utils/errors");
 const getClothingItems = (req, res) => {
   ClothingItem.find({})
     .then((items) => res.status(200).send(items))
-    .catch((err) =>
+    .catch(() =>
       res
         .status(SERVER_ERROR)
         .send({ message: "An error has occurred on the server" })

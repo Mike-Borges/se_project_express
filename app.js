@@ -17,7 +17,7 @@ mongoose
 
 app.use(express.json());
 
-//Temporary authorization middleware
+// Temporary authorization middleware
 app.use((req, res, next) => {
   req.user = {
     _id: "69544391be979bbc0a03cf31", // Example user ID - Hardcoded - replace with real auth logic
