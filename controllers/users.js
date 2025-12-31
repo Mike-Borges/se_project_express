@@ -4,7 +4,11 @@ const { BAD_REQUEST, NOT_FOUND, SERVER_ERROR } = require("../utils/errors");
 const getUsers = (req, res) => {
   User.find({})
     .then((users) => res.status(200).send(users))
-    .catch((err) => res.status(SERVER_ERROR).send({ message: err.message }));
+    .catch((err) =>
+      res
+        .status(SERVER_ERROR)
+        .send({ message: "An error has occurred on the server" })
+    );
 };
 
 const createUser = (req, res) => {
@@ -16,7 +20,9 @@ const createUser = (req, res) => {
       if (err.name === "ValidationError") {
         return res.status(BAD_REQUEST).send({ message: err.message });
       }
-      return res.status(SERVER_ERROR).send({ message: err.message });
+      return res
+        .status(SERVER_ERROR)
+        .send({ message: "An error has occurred on the server" });
     });
 };
 
@@ -36,7 +42,9 @@ const getUser = (req, res) => {
       ) {
         return res.status(NOT_FOUND).send({ message: "User not found" });
       }
-      return res.status(SERVER_ERROR).send({ message: err.message });
+      return res
+        .status(SERVER_ERROR)
+        .send({ message: "An error has occurred on the server" });
     });
 };
 
