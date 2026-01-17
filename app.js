@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const mainRouter = require("./routes/index");
 
 const { PORT = 3001 } = process.env;
@@ -15,15 +16,9 @@ mongoose
     console.error("Failed to connect to MongoDB", err);
   });
 
+app.use(cors());
 app.use(express.json());
 
-// Temporary authorization middleware
-app.use((req, res, next) => {
-  req.user = {
-    _id: "69544391be979bbc0a03cf31", // Example user ID - Hardcoded - replace with real auth logic
-  };
-  next();
-});
 app.use("/", mainRouter);
 
 app.listen(PORT, () => {
