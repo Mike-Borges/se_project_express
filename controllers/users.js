@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
-const User = require("../models/user");
 const jwt = require("jsonwebtoken");
+const User = require("../models/user");
+
 const { JWT_SECRET } = require("../utils/config");
 const {
   BAD_REQUEST,
@@ -32,7 +33,6 @@ const createUser = (req, res) => {
       res.status(201).send(userObj);
     })
     .catch((err) => {
-      console.error(err);
       if (err.code === 11000) {
         return res.status(CONFLICT).send({ message: "Email already in use" });
       }
@@ -51,7 +51,6 @@ const getCurrentUser = (req, res) => {
     .orFail()
     .then((user) => res.status(200).send(user))
     .catch((err) => {
-      console.error(err);
       if (err.name === "CastError") {
         return res.status(BAD_REQUEST).send({ message: "Invalid Data" });
       }
@@ -73,7 +72,7 @@ const login = (req, res) => {
       .send({ message: "Email and password are required" });
   }
 
-  User.findUserByCredentials(email, password)
+  return User.findUserByCredentials(email, password)
     .then((user) => {
       // Create JWT token that expires in 7 days
       const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
@@ -81,8 +80,7 @@ const login = (req, res) => {
       });
       res.status(200).send({ token });
     })
-    .catch((err) => {
-      console.error(err);
+    .catch(() => {
       res.status(UNAUTHORIZED).send({ message: "Incorrect email or password" });
     });
 };
@@ -95,14 +93,13 @@ const updateProfile = (req, res) => {
     userId,
     { name, avatar },
     {
-      new: true, // Return the updated document
-      runValidators: true, // Run schema validators on update
+      new: true,
+      runValidators: true,
     }
   )
     .orFail()
     .then((user) => res.status(200).send(user))
     .catch((err) => {
-      console.error(err);
       if (err.name === "ValidationError") {
         return res.status(BAD_REQUEST).send({ message: "Invalid data" });
       }
