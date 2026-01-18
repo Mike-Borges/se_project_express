@@ -3,7 +3,6 @@ const { auth } = require("../middlewares/auth");
 const {
   getClothingItems,
   createClothingItem,
-  getClothingItem,
   deleteClothingItem,
   likeItem,
   dislikeItem,
@@ -14,7 +13,6 @@ router.get("/", getClothingItems);
 
 // Protected routes - auth required
 router.post("/", auth, createClothingItem);
-router.get("/:itemId", auth, getClothingItem);
 router.delete("/:itemId", auth, deleteClothingItem);
 router.put("/:itemId/likes", auth, likeItem);
 router.delete("/:itemId/likes", auth, dislikeItem);

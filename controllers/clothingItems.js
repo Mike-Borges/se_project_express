@@ -32,24 +32,6 @@ const createClothingItem = (req, res) => {
     });
 };
 
-const getClothingItem = (req, res) => {
-  const { itemId } = req.params;
-  ClothingItem.findById(itemId)
-    .orFail()
-    .then((item) => res.status(200).send(item))
-    .catch((err) => {
-      if (err.name === "CastError") {
-        return res.status(BAD_REQUEST).send({ message: "Invalid data" });
-      }
-      if (err.name === "DocumentNotFoundError") {
-        return res.status(NOT_FOUND).send({ message: "Item not found" });
-      }
-      return res
-        .status(SERVER_ERROR)
-        .send({ message: "An error has occurred on the server" });
-    });
-};
-
 const deleteClothingItem = (req, res) => {
   const { itemId } = req.params;
 
@@ -127,7 +109,6 @@ const dislikeItem = (req, res) => {
 module.exports = {
   getClothingItems,
   createClothingItem,
-  getClothingItem,
   deleteClothingItem,
   likeItem,
   dislikeItem,
