@@ -19,7 +19,7 @@ const createClothingItem = (req, res, next) => {
       if (err.name === "ValidationError") {
         return next(new BadRequestError("Invalid data"));
       }
-      next(err);
+      return next(err);
     });
 };
 
@@ -45,7 +45,7 @@ const deleteClothingItem = (req, res, next) => {
       if (err.name === "DocumentNotFoundError") {
         return next(new NotFoundError("Item not found"));
       }
-      next(err);
+      return next(err);
     });
 };
 
@@ -66,7 +66,7 @@ const likeItem = (req, res, next) => {
       if (err.name === "DocumentNotFoundError") {
         return next(new NotFoundError("Item not found"));
       }
-      next(err);
+      return next(err);
     });
 };
 
@@ -87,7 +87,7 @@ const dislikeItem = (req, res, next) => {
       if (err.name === "DocumentNotFoundError") {
         return next(new NotFoundError("Item not found"));
       }
-      next(err);
+      return next(err);
     });
 };
 

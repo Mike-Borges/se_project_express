@@ -31,7 +31,7 @@ const createUser = (req, res, next) => {
       if (err.name === "ValidationError") {
         return next(new BadRequestError("Invalid data"));
       }
-      next(err);
+      return next(err);
     });
 };
 
@@ -48,7 +48,7 @@ const getCurrentUser = (req, res, next) => {
       if (err.name === "DocumentNotFoundError") {
         return next(new NotFoundError("User not found"));
       }
-      next(err);
+      return next(err);
     });
 };
 
@@ -70,7 +70,7 @@ const login = (req, res, next) => {
       if (err.message === "Incorrect email or password") {
         return next(new UnauthorizedError("Incorrect email or password"));
       }
-      next(err);
+      return next(err);
     });
 };
 
@@ -92,7 +92,7 @@ const updateProfile = (req, res, next) => {
       if (err.name === "DocumentNotFoundError") {
         return next(new NotFoundError("User not found"));
       }
-      next(err);
+      return next(err);
     });
 };
 
